@@ -23,86 +23,72 @@ minikube stop
 ### APIs Service
 ##### Build API Service
 ```
-$ cd api-service
-$ mvn package -DskipTests=True
+cd api-service && mvn package -DskipTests=True
 ```
 
 ##### Create docker images for APIs Service and push Docker Hub
 ```
-$ cd api-service
-$ docker build -t nhatthai/api-service .
-$ docker push nhatthai/api-service
+docker build -t chaudhryfaisal/api-service api-service/
+docker push chaudhryfaisal/api-service
 ```
 
 ##### Create Persitant Volume
 ```
-$ cd manifests
-$ kubectl create -f mongo-pv.yml
-$ kubectl get pv
+kubectl create -f manifests/mongo-pv.yml
+kubectl get pv
 ```
 
 ##### Create Persitant Volume Claim
 ```
-$ cd manifests
-$ kubectl create -f mongo-pvc.yml
-$ kubectl get pvc
+kubectl create -f manifests/mongo-pvc.yml
+kubectl get pvc
 ```
 
 ##### Create MongoDB Controller
 ```
-$ cd manifests
-$ kubectl create -f mongo-controller.yml
+kubectl create -f manifests/mongo-controller.yml
 ```
 
 ##### Create MongoDB Service
 ```
-$ cd manifests
-$ kubectl create -f mongo-service.yml
+kubectl create -f manifests/mongo-service.yml
 ```
 
 ##### Create API Service Deployment
 ```
-$ cd manifests
-$ kubectl create -f api-deploy.yml
+kubectl create -f manifests/api-deploy.yml
 ```
 
 ##### Create API Service
 ```
-$ cd manifests
-$ kubectl create -f api-service.yml
+kubectl create -f manifests/api-service.yml
 ```
 
 ##### Check Services
 ```
-$ kubectl describe services
+kubectl describe services
 ```
 
 ```
-$ kubectl describe replicationcontrollers/mongo-controller
+kubectl describe replicationcontrollers/mongo-controller
 ```
 
 ```
-$ kubectl exec -it mongo-controller-vbqf4 -c mongo bash
+kubectl exec -it mongo-controller-vbqf4 -c mongo bash
 ```
 
 ##### Enable and Create Ingress
 ```
-$ minikube addons enable ingress
+minikube addons enable ingress
 ```
 
 ```
-$ cd manifests
-$ kubectl create -f ingress.yml
+kubectl create -f manifests/ingress.yml
 ```
 
-##### Add mysite.com into /etc/hosts
+##### Add app.k8.fic.com into /etc/hosts
 ```
-$ minikube ip
-192.168.99.100
-```
-
-```
-192.168.99.100 mysite.com
+sudo echo "$(minikube ip) app.k8.fic.com " >> /etc/hosts
 ```
 
 ### Notes
@@ -116,8 +102,7 @@ We can create API Service Replication Controller instead of a API Service Deploy
 Please checkout Git branch: replication-api-service
 
 ```
-$ cd manifests
-$ kubectl create -f api-controller.yml
+kubectl create -f manifests/api-controller.yml
 ```
 
 ### Usage
@@ -138,7 +123,7 @@ POST http://mysite.com/student
 ```
 
 ##### Get all student
-http://mysite.com/students
+http://app.k8.fic.com/students
 
 ### Reference
 [Running a MEAN stack on Google Cloud Platform with Kubernetes](https://medium.com/google-cloud/running-a-mean-stack-on-google-cloud-platform-with-kubernetes-149ca81c2b5d)
