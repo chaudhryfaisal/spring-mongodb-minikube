@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: api-service
-        image: nhatthai/api-service
+        image: chaudhryfaisal/api-service
         ports:
         - containerPort: 8080
           protocol: TCP

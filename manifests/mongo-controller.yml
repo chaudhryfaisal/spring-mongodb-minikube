@@ -24,4 +24,4 @@ spec:
       volumes:
         - name: mypd
           persistentVolumeClaim:
-            claimName: myclaim-1
+            claimName: mong-db-claim-1

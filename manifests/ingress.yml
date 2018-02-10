@@ -6,7 +6,7 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: mysite.com
+  - host: app.k8.fic.com
     http:
       paths:
       - backend:

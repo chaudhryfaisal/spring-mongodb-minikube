@@ -13,7 +13,8 @@ Using Minikube: build on local
 
 #### Minikube
 ```
-minikube start
+minikube start --vm-driver hyperkit --insecure-registry $(hostname):5000
+minikube addons enable ingress
 ```
 
 ```
@@ -77,18 +78,15 @@ kubectl describe replicationcontrollers/mongo-controller
 kubectl exec -it mongo-controller-vbqf4 -c mongo bash
 ```
 
-##### Enable and Create Ingress
-```
-minikube addons enable ingress
-```
-
+##### Create Ingress
 ```
 kubectl create -f manifests/ingress.yml
 ```
 
 ##### Add app.k8.fic.com into /etc/hosts
 ```
-sudo echo "$(minikube ip) app.k8.fic.com " >> /etc/hosts
+sudo sed -i '' '/app.k8.fic.com/d' /etc/hosts
+echo "$(minikube ip) app.k8.fic.com " | sudo tee -a /etc/hosts
 ```
 
 ### Notes
@@ -107,11 +105,12 @@ kubectl create -f manifests/api-controller.yml
 
 ### Usage
 ##### Create a student
-POST http://mysite.com/student
+
+POST http://app.k8.fic.com/student
 ```
 {
 	"id": "1",
-	"name": "NhatThai",
+	"name": "Name",
 	"description": "Programmer",
 	"courses": [{
 		"id": "1",
@@ -121,9 +120,15 @@ POST http://mysite.com/student
 	}]
 }
 ```
+```bash
+curl -H "Content-Type: application/json" -X POST -d '{"id":"1","name":"Name","description":"Programmer","courses":[{"id":"1","name":"Minikube on local","description":"Kubenetes","steps":[1]}]}' http://app.k8.fic.com/student
+
+```
 
 ##### Get all student
-http://app.k8.fic.com/students
+```bash
+curl app.k8.fic.com/students
+```
 
 ### Reference
 [Running a MEAN stack on Google Cloud Platform with Kubernetes](https://medium.com/google-cloud/running-a-mean-stack-on-google-cloud-platform-with-kubernetes-149ca81c2b5d)
