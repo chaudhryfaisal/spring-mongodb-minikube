@@ -13,7 +13,7 @@ Using Minikube: build on local
 
 #### Minikube
 ```
-minikube start --vm-driver hyperkit --insecure-registry $(hostname):5000
+minikube start --vm-driver hyperkit
 minikube addons enable ingress
 ```
 
