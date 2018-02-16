@@ -12,13 +12,16 @@ Using Replication Controllers for building MongoDB
 Using Minikube: build on local
 
 #### Minikube
+##### Setup & Start
 ```
 minikube start --vm-driver hyperkit
 minikube addons enable ingress
 ```
 
+##### Stop & Delete
 ```
 minikube stop
+minikube delete
 ```
 
 ### APIs Service
@@ -127,7 +130,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"id":"1","name":"Name","de
 
 ##### Get all student
 ```bash
-curl app.k8.fic.com/students
+curl -v app.k8.fic.com/students
 ```
 
 ### Reference
