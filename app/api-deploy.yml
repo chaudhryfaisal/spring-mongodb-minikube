@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fic-service
+  labels:
+    run: fic-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: fic-service
+    spec:
+      containers:
+      - name: fic-service
+        image: chaudhryfaisal/api-service:latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP
